@@ -1,6 +1,7 @@
 FROM registry.access.redhat.com/ubi8/ubi:latest
 
-USER root
+EXPOSE 2525
+USER 0
 
 RUN yum install -y postfix
 COPY config/* /etc/postfix
