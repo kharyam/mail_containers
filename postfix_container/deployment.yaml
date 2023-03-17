@@ -27,6 +27,33 @@ spec:
       - image: image-registry.openshift-image-registry.svc:5000/postfix/postfix:latest
         imagePullPolicy: Always
         name: postfix
+        livenessProbe:
+          failureThreshold: 2
+          tcpSocket:
+            port: 2525
+          initialDelaySeconds: 10
+          periodSeconds: 60
+        readinessProbe:
+          failureThreshold: 2
+          tcpSocket:
+            port: 2525
+          periodSeconds: 60
+        volumeMounts:
+        - name: certs
+          mountPath: /etc/postfix/certs
+          readOnly: true
+        - name: ca
+          mountPath: /etc/postfix/ca
+          readOnly: true
+#        securityContext:
+#          capabilities:
+#            drop:
+#            - ALL
+#            add:
+#            - DAC_OVERRIDE
+#            - FOWNER
+#            - SETUID
+#            - SETGID
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -34,3 +61,10 @@ spec:
         runAsUser: 0
       terminationGracePeriodSeconds: 30
       serviceAccount: postfix
+      volumes:
+      - name: certs
+        secret:
+          secretName: postfix
+      - name: ca
+        configMap:
+          name: postfix
