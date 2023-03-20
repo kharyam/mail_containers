@@ -716,8 +716,9 @@ smtpd_tls_key_file = /etc/postfix/certs/tls.key
 
 # Announce STARTTLS support to remote SMTP clients, but do not require that
 # clients use TLS encryption (opportunistic TLS inbound).
-#
-smtpd_tls_security_level = may
+
+# Require tls
+smtpd_tls_security_level = encrypt
 
 # Directory with PEM format Certification Authority certificates that the
 # Postfix SMTP client uses to verify a remote SMTP server certificate.
@@ -734,6 +735,7 @@ smtp_tls_CAfile = /etc/postfix/ca/service-ca.crt
 # plaintext (opportunistic TLS outbound).
 #
 smtp_tls_security_level = may
+
 meta_directory = /etc/postfix
 shlib_directory = /usr/lib64/postfix
 maillog_file = /dev/stdout

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postfix
+spec:
+  type: NodePort
+  selector:
+    deployment: postfix
+  ports:
+  - port: 2525
+    nodePort: 30306
+    name: tcp
