@@ -321,4 +321,8 @@
 #        111 8th Avenue
 #        New York, NY 10011, USA
 # 
-#                                                                     VIRTUAL(5)
+
+@securemail.sbx2fax.prime.acme.gov fmail@localhost
+@securemail-sbxgmail.prime.acme.gov gmail@localhost
+@securemail-sbxaccount.prime.acme.gov amail@localhost
+@securemail.sbxsecure.prime.acme.gov smail@localhost

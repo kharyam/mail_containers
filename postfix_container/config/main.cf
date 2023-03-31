@@ -180,7 +180,7 @@ inet_protocols = all
 #
 # See also below, section "REJECTING MAIL FOR UNKNOWN LOCAL USERS".
 #
-mydestination = $myhostname, localhost.$mydomain, localhost
+mydestination = static:all
 #mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
 #mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain,
 #	mail.$mydomain, www.$mydomain, ftp.$mydomain
@@ -402,7 +402,7 @@ unknown_local_recipient_reject_code = 550
 # "postfix reload" to eliminate the delay.
 #
 #alias_maps = dbm:/etc/aliases
-alias_maps = hash:/etc/aliases
+alias_maps = hash:/etc/postfix/aliases
 #alias_maps = hash:/etc/aliases, nis:mail.aliases
 #alias_maps = netinfo:/aliases
 
@@ -435,7 +435,7 @@ alias_database = hash:/etc/aliases
 # "Maildir/" for qmail-style delivery (the / is required).
 #
 #home_mailbox = Mailbox
-#home_mailbox = Maildir/
+home_mailbox = Maildir/
  
 # The mail_spool_directory parameter specifies the directory where
 # UNIX-style mailboxes are kept. The default setting depends on the
@@ -701,6 +701,7 @@ readme_directory = /usr/share/doc/postfix/README_FILES
 #
 # Basic Postfix TLS configuration by default with self-signed certificate
 # for inbound SMTP and also opportunistic TLS for outbound SMTP.
+#smtpd_use_tls = no
 smtpd_use_tls = yes
 # The full pathname of a file with the Postfix SMTP server RSA certificate
 # in PEM format. Intermediate certificates should be included in general,
@@ -718,7 +719,7 @@ smtpd_tls_key_file = /etc/postfix/certs/tls.key
 # clients use TLS encryption (opportunistic TLS inbound).
 
 # Require tls
-smtpd_tls_security_level = encrypt
+smtpd_tls_security_level = may
 
 # Directory with PEM format Certification Authority certificates that the
 # Postfix SMTP client uses to verify a remote SMTP server certificate.
@@ -740,3 +741,5 @@ meta_directory = /etc/postfix
 shlib_directory = /usr/lib64/postfix
 maillog_file = /dev/stdout
 mynetworks = 127.0.0.0/8, 192.168.30.0/24, 10.0.0.0/8
+virtual_alias_maps = hash:/etc/postfix/virtual 
+virtual_alias_domains = securemail.sbx2fax.prime.acme.gov fmail.localhost, securemail-sbxgmail.prime.acme.gov gmail.localhost, securemail-sbxaccount.prime.acme.gov amail.localhost, securemail.sbxsecure.prime.acme.gov smail.localhost
